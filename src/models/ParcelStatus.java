@@ -1,5 +1,9 @@
 package models;
 
-public class ParcelStatus {
-    
+public enum ParcelStatus {
+    CREATED,
+    SHIPPED,
+    IN_TRANSIT,
+    OUT_FOR_DELIVERY,
+    DELIVERED
 }
