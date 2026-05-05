@@ -17,13 +17,15 @@ public class Parcel {
     private ArrayList<TrackingRecord> trackingHistory;
 
     public Parcel(String trackingId, Customer sender, String receiverName, Address address,
-            double weight, ParcelStatus status) {
+            double weight) {
         this.trackingId = trackingId;
         this.sender = sender;
         this.receiverName = receiverName;
         this.address = address;
         this.weight = weight;
-        this.status = status;
+        
+        this.status = ParcelStatus.CREATED;
+        
         this.trackingHistory = new ArrayList<>();
         
         trackingHistory.add(new TrackingRecord(status, "Warehouse"));

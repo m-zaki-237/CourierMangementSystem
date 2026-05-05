@@ -2,8 +2,8 @@
 build/
 dist/
 
-# NetBeans private files
-nbproject/private/
+# NetBeans project files
+nbproject/
 
 # Compiled files
 *.class

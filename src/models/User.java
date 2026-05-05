@@ -5,15 +5,23 @@ public abstract class User {
     protected int id;
     protected String name;
     protected String email;
-
-    public User(int id, String name, String email) {
+    protected String password;
+    protected Role role;
+    
+    public User(int id, String name, String email, String password, Role role) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.password = password;
+        this.role = role;
     }
 
     public abstract void login();
-
+    
+    public Role getRole(){
+        return role;
+    }
+    
     public int getId() {
         return id;
     }
@@ -24,6 +32,10 @@ public abstract class User {
     
     public String getEmail() {
         return email;
+    }
+    
+    public String getPassword(){
+        return password;
     }
 
 }
