@@ -36,6 +36,8 @@ public class ParcelService {
             System.out.println("Access Denied! Only Admin Can Approve Parcel");
             return;
         }
+        parcel.calculateCost();
+        parcel.showCostBreakdown();
         parcel.generateTrackingId();
         parcel.updateStatus(ParcelStatus.APPROVED, "Admin Approved Parcel");
         System.out.println("Tracking Id Generated: " + parcel.getTrackingId());

@@ -9,6 +9,7 @@ public class Parcel {
     private String receiverName;
     private Address address;
     private double weight;
+    private double cost;
     private ParcelStatus status;
 
     private DeliveryAgent assignedAgent;
@@ -34,6 +35,22 @@ public class Parcel {
         trackingHistory.add(new TrackingRecord(ParcelStatus.PENDING_APPROVAL, "Parcel request submitted"));
     }
 
+    public void calculateCost() {
+        double ratePerKg = 250;
+        double total = weight * ratePerKg;
+        this.cost = total;
+    }
+
+    public void showCostBreakdown() {
+
+        double ratePerKg = 250;
+
+        System.out.println("----- COST BREAKDOWN -----");
+        System.out.println("Weight: " + weight + " kg");
+        System.out.println("Rate per kg: " + ratePerKg);
+        System.out.println("Total Price: " + cost);
+    }
+
     public void generateTrackingId() {
         this.trackingId = "SwS " + (int) (Math.random() * 100000);
     }
@@ -54,6 +71,10 @@ public class Parcel {
 
             System.out.println(record.getStatus() + " | " + record.getLocation());
         }
+    }
+
+    public double getCost() {
+        return cost;
     }
 
     public String getTrackingId() {
