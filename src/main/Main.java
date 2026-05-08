@@ -7,46 +7,88 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // ===== Services =====
-        UserService userService = new UserService();
         ParcelService parcelService = new ParcelService();
+        UserService userService = new UserService();
 
-        // ===== Create Users =====
-        Customer c1 = new Customer(1, "Zaki", "zaki@gmail.com", "123");
+        Customer customer = new Customer(
+                1,
+                "Zaki",
+                "zaki@gmail.com",
+                "123"
+        );
 
-        userService.addUser(c1);
+        Admin admin = new Admin(
+                2,
+                "Admin",
+                "admin@gmail.com",
+                "admin"
+        );
 
-        // ===== Login Test =====
-        User loggedUser = userService.login("zaki@gmail.com", "123");
+        DeliveryAgent agent = new DeliveryAgent(
+                3,
+                "Ali Agent",
+                "agent@gmail.com",
+                "agent"
+        );
 
-        if (loggedUser != null) {
-            System.out.println("Login Successful: " + loggedUser.getName());
-        } else {
-            System.out.println("Login Failed");
-        }
+        userService.addUser(customer);
+        userService.addUser(admin);
+        userService.addUser(agent);
 
-        // ===== Create Address =====
+        User loggedCustomer = userService.login("zaki@gmail.com", "123");
+        User loggedAdmin = userService.login("admin@gmail.com", "admin");
+        User loggedAgent = userService.login("agent@gmail.com", "agent");
+
+        System.out.println("\n===== CUSTOMER REQUEST PARCEL =====");
+
         Address addr = new Address("Street 1", "Lahore");
 
-        // ===== Create Parcel =====
-        Parcel p1 = parcelService.createParcel(
-                c1,
+        Parcel parcel = parcelService.requestParcel(
+                loggedCustomer,
                 "Ali",
                 addr,
                 2.5
         );
 
-        System.out.println("Parcel Created with ID: " + p1.getTrackingId());
+        if (parcel == null) return;
 
-        // ===== Update Status =====
-        parcelService.updateStatus(
-                loggedUser,
-                p1.getTrackingId(),
+        System.out.println("\n===== ADMIN APPROVES PARCEL =====");
+
+        parcelService.approveParcel(loggedAdmin, parcel);
+
+        System.out.println("\n===== ADMIN ASSIGNS AGENT =====");
+
+        parcelService.assignAgent(loggedAdmin, parcel, agent);
+
+        System.out.println("\n===== AGENT UPDATES DELIVERY =====");
+
+        parcelService.updateDeliveryStatus(
+                loggedAgent,
+                parcel,
                 ParcelStatus.SHIPPED,
                 "Lahore Hub"
         );
 
-        // ===== Track Parcel =====
-        p1.showTrackingHistory();
+        parcelService.updateDeliveryStatus(
+                loggedAgent,
+                parcel,
+                ParcelStatus.IN_TRANSIT,
+                "On the way to destination"
+        );
+
+        parcelService.updateDeliveryStatus(
+                loggedAgent,
+                parcel,
+                ParcelStatus.DELIVERED,
+                "Delivered at customer address"
+        );
+
+        System.out.println("\n===== TRACK PARCEL =====");
+
+        parcelService.trackParcel(parcel.getTrackingId());
+
+        System.out.println("\n===== ADMIN VIEW ALL PARCELS =====");
+
+        parcelService.showAllParcels(loggedAdmin);
     }
 }

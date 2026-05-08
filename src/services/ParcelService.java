@@ -7,76 +7,114 @@ import models.Address;
 import models.Parcel;
 import models.ParcelStatus;
 import models.Role;
+import models.Admin;
+import models.DeliveryAgent;
 
 public class ParcelService {
 
     private ArrayList<Parcel> parcels = new ArrayList<>();
     private int counter = 1000;
 
-    public String generateTrackingId() {
-        return "PK" + counter++;
-    }
-
-    // ===== CREATE PARCEL (ONLY CUSTOMER) =====
-    public Parcel createParcel(User user, String receiverName,
-                               Address address, double weight) {
-
+    public Parcel requestParcel(User user, String receiverName, Address address, double weight) {
         if (user.getRole() != Role.CUSTOMER) {
-            System.out.println("Access Denied: Only customers can create parcels");
+            System.out.println("Access Denied! Not a customer");
             return null;
         }
 
-        String id = generateTrackingId();
+        Customer sender = (Customer) user;
 
-        Parcel p = new Parcel(id, (Customer) user, receiverName, address, weight);
-
+        Parcel p = new Parcel(sender, receiverName, address, weight);
         parcels.add(p);
+
+        System.out.println("Parcel request submitted for admin approval");
 
         return p;
     }
 
-    // ===== UPDATE STATUS (ADMIN / DELIVERY AGENT ONLY) =====
-    public boolean updateStatus(User user, String trackingId,
-                                ParcelStatus status, String location) {
-
-        if (user.getRole() != Role.ADMIN &&
-            user.getRole() != Role.DELIVERY_AGENT) {
-
-            System.out.println("Access Denied: No permission to update status");
-            return false;
+    public void approveParcel(User user, Parcel parcel) {
+        if (user.getRole() != Role.ADMIN) {
+            System.out.println("Access Denied! Only Admin Can Approve Parcel");
+            return;
         }
-
-        Parcel p = getParcelById(trackingId);
-
-        if (p != null) {
-            p.updateStatus(status, location);
-            return true;
-        }
-
-        return false;
+        parcel.generateTrackingId();
+        parcel.updateStatus(ParcelStatus.APPROVED, "Admin Approved Parcel");
+        System.out.println("Tracking Id Generated: " + parcel.getTrackingId());
+        System.out.println("Tracking Id sent to sender & reciever");
     }
 
-    // ===== GET PARCEL =====
-    public Parcel getParcelById(String id) {
+    public void assignAgent(User user, Parcel parcel, DeliveryAgent agent) {
+        if (user.getRole() != Role.ADMIN) {
+            System.out.println("Only admin can assign delivery agents");
+            return;
+        }
+
+        parcel.assignAgent(agent);
+        System.out.println("Delivery agent assigned successfully");
+    }
+
+    public void updateDeliveryStatus(User user, Parcel parcel, ParcelStatus status, String location) {
+        if (user.getRole() != Role.DELIVERY_AGENT) {
+            System.out.println("Only delivery agents can update delivery status");
+            return;
+        }
+
+        parcel.updateStatus(status, location);
+        System.out.println("Parcel status updated: " + parcel.getStatus());
+    }
+
+    public void showAllParcels(User user) {
+
+        if (user.getRole() != Role.ADMIN) {
+
+            System.out.println("Only admin can view all parcels");
+            return;
+        }
 
         for (int i = 0; i < parcels.size(); i++) {
-            if (parcels.get(i).getTrackingId().equals(id)) {
-                return parcels.get(i);
+
+            Parcel p = parcels.get(i);
+
+            System.out.println(
+                    "Tracking ID: " + p.getTrackingId()
+            );
+
+            System.out.println(
+                    "Sender: " + p.getSender().getName()
+            );
+
+            System.out.println(
+                    "Receiver: " + p.getReceiverName()
+            );
+
+            System.out.println(
+                    "Status: " + p.getStatus()
+            );
+
+            if (p.getAssignedAgent() != null) {
+
+                System.out.println(
+                        "Agent: "
+                        + p.getAssignedAgent().getName()
+                );
+            }
+
+            System.out.println("-------------------");
+        }
+    }
+
+    public void trackParcel(String trackingId) {
+
+        for (int i = 0; i < parcels.size(); i++) {
+            Parcel p = parcels.get(i);
+            if (p.getTrackingId() != null
+                    && p.getTrackingId().equals(trackingId)) {
+
+                p.showTrackingHistory();
+                return;
             }
         }
 
-        return null;
+        System.out.println("Parcel not found");
     }
 
-    // ===== TRACK PARCEL (ALL USERS ALLOWED) =====
-    public void trackParcel(String id) {
-
-        Parcel p = getParcelById(id);
-
-        if (p != null) {
-            p.showTrackingHistory();
-        } else {
-            System.out.println("Parcel not found");
-        }
-    }
 }
