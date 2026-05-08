@@ -7,6 +7,7 @@ nbproject/
 
 # Compiled files
 *.class
+*.txt
 
 # Logs
 *.log
