@@ -13,6 +13,7 @@ public class UserService {
         for (int i = 0; i < users.size(); i++){
             User u = users.get(i);
             if(u.getEmail().equals(email) && u.getPassword().equals(password)){
+                System.out.println("LOGIN ROLE: " + u.getRole());
                 return u;
             }
         }
@@ -23,5 +24,9 @@ public class UserService {
         for(int i = 0; i < users.size(); i++){
             System.out.println(users.get(i).getName());
         }
+    }
+    
+    public ArrayList<User> getUsers() {
+        return users;
     }
 }

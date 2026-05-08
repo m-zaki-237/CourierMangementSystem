@@ -12,7 +12,12 @@ import models.DeliveryAgent;
 
 public class ParcelService {
 
+    private FileService fileService = new FileService();
     private ArrayList<Parcel> parcels = new ArrayList<>();
+
+    public ArrayList<Parcel> getParcels() {
+        return parcels;
+    }
     private int counter = 1000;
 
     public Parcel requestParcel(User user, String receiverName, String receiverEmail,
@@ -43,8 +48,7 @@ public class ParcelService {
         parcel.updateStatus(ParcelStatus.APPROVED, "Admin Approved Parcel");
         System.out.println("Tracking Id Generated: " + parcel.getTrackingId());
         System.out.println("Tracking Id sent to sender & reciever");
-        FileService fs = new FileService();
-        fs.saveParcel(parcel, "/media/zaki/workspace1/BCS2/OOP/LAB/SwiftShip/Parcels.txt");
+        fileService.saveParcel(parcel, "/media/zaki/workspace1/BCS2/OOP/LAB/SwiftShip/Parcels.txt");
     }
 
     public void assignAgent(User user, Parcel parcel, DeliveryAgent agent) {
@@ -58,13 +62,18 @@ public class ParcelService {
     }
 
     public void updateDeliveryStatus(User user, Parcel parcel, ParcelStatus status, String location) {
+
         if (user.getRole() != Role.DELIVERY_AGENT) {
             System.out.println("Only delivery agents can update delivery status");
             return;
         }
 
         parcel.updateStatus(status, location);
+
         System.out.println("Parcel status updated: " + parcel.getStatus());
+
+        fileService.saveParcel(parcel,
+                "/media/zaki/workspace1/BCS2/OOP/LAB/SwiftShip/Parcels.txt");
     }
 
     public void showAllParcels(User user) {
@@ -124,4 +133,49 @@ public class ParcelService {
         System.out.println("Parcel not found");
     }
 
+    public ArrayList<Parcel> getAllParcels() {
+        return parcels;
+    }
+
+    public ArrayList<Parcel> getParcelsByStatus(ParcelStatus status) {
+        ArrayList<Parcel> filteredParcels = new ArrayList<>();
+        for (Parcel parcel : parcels) {
+            if (parcel.getStatus() == status) {
+                filteredParcels.add(parcel);
+            }
+        }
+        return filteredParcels;
+    }
+
+    public ArrayList<Parcel> getParcelsByCustomer(Customer customer) {
+        ArrayList<Parcel> customerParcels = new ArrayList<>();
+        for (Parcel parcel : parcels) {
+            if (parcel.getSender().equals(customer)) {
+                customerParcels.add(parcel);
+            }
+        }
+        return customerParcels;
+    }
+
+    public ArrayList<Parcel> getParcelsByAgent(DeliveryAgent agent) {
+        ArrayList<Parcel> agentParcels = new ArrayList<>();
+        for (Parcel parcel : parcels) {
+            if (parcel.getAssignedAgent() != null && parcel.getAssignedAgent() == agent) {
+                agentParcels.add(parcel);
+            }
+        }
+        return agentParcels;
+    }
+
+    public Parcel getParcelByTrackingId(String trackingId) {
+        if (trackingId == null) {
+            return null;
+        }
+        for (Parcel parcel : parcels) {
+            if (trackingId.equals(parcel.getTrackingId())) {
+                return parcel;
+            }
+        }
+        return null;
+    }
 }

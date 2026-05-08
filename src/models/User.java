@@ -38,4 +38,23 @@ public abstract class User {
         return password;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        User other = (User) obj;
+        return id == other.id && role == other.role;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Integer.hashCode(id);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        return result;
+    }
+
 }
