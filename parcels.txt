@@ -1,0 +1,12 @@
+===== PARCEL RECORD =====
+Tracking ID: SwS 44810
+Sender: Zaki
+Sender Email: zaki@gmail.com
+Receiver: Ali
+Receiver Email: ali@gmail.com
+Address: models.Address@33c7353a
+Weight: 2.5
+Price: 625.0
+Status: APPROVED
+=========================
+

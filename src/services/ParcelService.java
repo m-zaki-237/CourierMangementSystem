@@ -15,7 +15,8 @@ public class ParcelService {
     private ArrayList<Parcel> parcels = new ArrayList<>();
     private int counter = 1000;
 
-    public Parcel requestParcel(User user, String receiverName, Address address, double weight) {
+    public Parcel requestParcel(User user, String receiverName, String receiverEmail,
+            Address address, double weight) {
         if (user.getRole() != Role.CUSTOMER) {
             System.out.println("Access Denied! Not a customer");
             return null;
@@ -23,7 +24,7 @@ public class ParcelService {
 
         Customer sender = (Customer) user;
 
-        Parcel p = new Parcel(sender, receiverName, address, weight);
+        Parcel p = new Parcel(sender, receiverName, receiverEmail, address, weight);
         parcels.add(p);
 
         System.out.println("Parcel request submitted for admin approval");
@@ -42,6 +43,8 @@ public class ParcelService {
         parcel.updateStatus(ParcelStatus.APPROVED, "Admin Approved Parcel");
         System.out.println("Tracking Id Generated: " + parcel.getTrackingId());
         System.out.println("Tracking Id sent to sender & reciever");
+        FileService fs = new FileService();
+        fs.saveParcel(parcel, "/media/zaki/workspace1/BCS2/OOP/LAB/SwiftShip/Parcels.txt");
     }
 
     public void assignAgent(User user, Parcel parcel, DeliveryAgent agent) {
@@ -102,6 +105,8 @@ public class ParcelService {
 
             System.out.println("-------------------");
         }
+        FileService fs = new FileService();
+        fs.readParcels("/media/zaki/workspace1/BCS2/OOP/LAB/SwiftShip/Parcels.txt");
     }
 
     public void trackParcel(String trackingId) {

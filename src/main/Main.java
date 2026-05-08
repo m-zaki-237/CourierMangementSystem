@@ -46,10 +46,11 @@ public class Main {
         Parcel parcel = parcelService.requestParcel(
                 loggedCustomer,
                 "Ali",
+                "ali@gmail.com",
                 addr,
                 2.5
         );
-
+        
         if (parcel == null) return;
 
         System.out.println("\n===== ADMIN APPROVES PARCEL =====");

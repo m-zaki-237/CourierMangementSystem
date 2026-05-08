@@ -7,6 +7,7 @@ public class Parcel {
     private String trackingId;
     private Customer sender;
     private String receiverName;
+    private String receiverEmail;
     private Address address;
     private double weight;
     private double cost;
@@ -20,11 +21,12 @@ public class Parcel {
 
     private ArrayList<TrackingRecord> trackingHistory;
 
-    public Parcel(Customer sender, String receiverName, Address address,
+    public Parcel(Customer sender, String receiverName, String receiverEmail, Address address,
             double weight) {
         this.trackingId = null;
         this.sender = sender;
         this.receiverName = receiverName;
+        this.receiverEmail = receiverEmail;
         this.address = address;
         this.weight = weight;
 
@@ -87,6 +89,10 @@ public class Parcel {
 
     public String getReceiverName() {
         return receiverName;
+    }
+
+    public String getReceiverEmail() {
+        return receiverEmail;
     }
 
     public Address getAddress() {
