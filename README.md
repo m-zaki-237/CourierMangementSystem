@@ -44,37 +44,35 @@ The system includes a Java Swing GUI and file handling for persistent data stora
 ---
 
 ## 📁 Project Structure
+## 📁 Project Structure
+
 SwiftShip Project
 
 📦 models/
-
-👤 User.java
-🧑‍💼 Customer.java
-🛡️ Admin.java
-🚚 DeliveryAgent.java
-📦 Parcel.java
-🏠 Address.java
-📊 ParcelStatus.java
-🔑 Role.java
+- 👤 User.java  
+- 🧑‍💼 Customer.java  
+- 🛡️ Admin.java  
+- 🚚 DeliveryAgent.java  
+- 📦 Parcel.java  
+- 🏠 Address.java  
+- 📊 ParcelStatus.java  
+- 🔑 Role.java  
 
 ⚙️ services/
-
-👥 UserService.java
-📦 ParcelService.java
-🗂️ FileService.java
-🧠 AppContext.java
+- 👥 UserService.java  
+- 📦 ParcelService.java  
+- 🗂️ FileService.java  
+- 🧠 AppContext.java  
 
 🖥️ gui/
-
-🔐 LoginFrame.java
-🛡️ AdminPanel.java
-👤 CustomerPanel.java
-🚚 AgentPanel.java
-🏠 MainDashboard.java
+- 🔐 LoginFrame.java  
+- 🛡️ AdminPanel.java  
+- 👤 CustomerPanel.java  
+- 🚚 AgentPanel.java  
+- 🏠 MainDashboard.java  
 
 🚀 main/
-
-▶️ Main.java
+- ▶️ Main.java  
 
 🗃️ Parcels.txt (generated file for storage)
 
