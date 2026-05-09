@@ -2,7 +2,7 @@ package models;
 
 import java.util.ArrayList;
 
-public class Parcel {
+public class Parcel implements Trackable {
 
     private String trackingId;
     private Customer sender;

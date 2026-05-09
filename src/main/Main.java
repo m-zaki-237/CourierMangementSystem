@@ -10,6 +10,9 @@ public class Main {
         AppContext.userService.addUser(
                 new Customer(1, "Zaki", "zaki@gmail.com", "123")
         );
+        AppContext.userService.addUser(
+                new Customer(1, "Sheri", "sheri@gmail.com", "123")
+        );
 
         AppContext.userService.addUser(
                 new Admin(2, "Admin", "admin@gmail.com", "admin")
