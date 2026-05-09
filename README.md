@@ -44,33 +44,39 @@ The system includes a Java Swing GUI and file handling for persistent data stora
 ---
 
 ## 📁 Project Structure
-├── models/
-│ ├── User.java
-│ ├── Customer.java
-│ ├── Admin.java
-│ ├── DeliveryAgent.java
-│ ├── Parcel.java
-│ ├── Address.java
-│ ├── ParcelStatus.java
-│ ├── Role.java
-│
-├── services/
-│ ├── UserService.java
-│ ├── ParcelService.java
-│ ├── FileService.java
-│ ├── AppContext.java
-│
-├── gui/
-│ ├── LoginFrame.java
-│ ├── AdminPanel.java
-│ ├── CustomerPanel.java
-│ ├── AgentPanel.java
-│ ├── MainDashboard.java
-│
-├── main/
-│ ├── Main.java
-│
-└── Parcels.txt (generated file for storage)
+SwiftShip Project
+
+📦 models/
+
+👤 User.java
+🧑‍💼 Customer.java
+🛡️ Admin.java
+🚚 DeliveryAgent.java
+📦 Parcel.java
+🏠 Address.java
+📊 ParcelStatus.java
+🔑 Role.java
+
+⚙️ services/
+
+👥 UserService.java
+📦 ParcelService.java
+🗂️ FileService.java
+🧠 AppContext.java
+
+🖥️ gui/
+
+🔐 LoginFrame.java
+🛡️ AdminPanel.java
+👤 CustomerPanel.java
+🚚 AgentPanel.java
+🏠 MainDashboard.java
+
+🚀 main/
+
+▶️ Main.java
+
+🗃️ Parcels.txt (generated file for storage)
 
 ---
 
@@ -87,3 +93,8 @@ The system includes a Java Swing GUI and file handling for persistent data stora
 
 ## 📂 Important Note (File Path)
 This project uses file handling for storing parcel data.
+👉 YOU MUST UPDATE FILE PATHS according to your system:
+
+Example:
+```java
+String filePath = "YOUR_SYSTEM_PATH/Parcels.txt";
